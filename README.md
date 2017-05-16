@@ -16,6 +16,9 @@ truncated at the given value.
 - **listMaxTuplesAll**: This function takes in a set and returns a list of all 
 tuples in the set with the same maximum value. This function will behave as
 listMaxTuples if the set only has one max tuple.
+- **mom**: This function takes in a list of truncated maximum values, 
+preferentially the product of truncateConsequentMu and listMaxTuplesAll, and,
+returns the mean of the maximum values of the tuples (ie, the integer value).
 
 
 ## Warning!
@@ -23,6 +26,7 @@ The code presented here does not handle exceptional cases such as:
 - Conflicting Domains
 - Improper Syntax
 - Improper Values
+
 You are responsible for checking these conditions before the sets are passed to
 the functions.
 
