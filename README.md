@@ -52,7 +52,7 @@ They are merely helper functions written to help implement the six discussed
 above. Ignore them or feel free to use them as you see fit.
 
 ## How Do I Use It?
-Just calls the functions by name in the interpreter.
+Just call the functions by name in the interpreter.
 
 ## License Information
 This software is licensed under the GNU GPL V3.0. The actual license can be
