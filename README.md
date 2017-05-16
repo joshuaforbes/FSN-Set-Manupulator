@@ -2,7 +2,8 @@
 
 ## What Does It Do?
 This program implements 6 main functions that allow you to perform operations
-on fuzzy sets in Fuzzy Set Notation. The operations are as follows:
+on fuzzy sets in Fuzzy Set Notation. The parameter interface for these function
+is curried. The operations are as follows:
 - **set_intersect**: This function takes in two sets and returns a set that contains
 the point-by-point maximum between both sets.
 - **listMaxTuples**: This function takes in a set and returns the tuple with the
@@ -35,19 +36,23 @@ This version was developed using:
 - Ocaml 4.02.3
 
 ## How Do I Get It?
-First you need to clone the repo. Once you do that run the following command:
+First you need to clone the repo. Once you do that start Ocaml like so:
 ```
-make
+ocaml
 ```
-That will produce the program **checker1**.
+That will start the ocaml interpreter. Then you load the file like so:
+```
+# #use "sde2.caml";;
+```
+This should give you signatures for the six functions discussed above. This
+means that the file was imported properly and that everything is good to go.
+
+## What About These Other Functions That Come Up?
+They are merely helper functions written to help implement the six discussed
+above. Ignore them or feel free to use them as you see fit.
 
 ## How Do I Use It?
-Once you *make* the program you can run it using the following command:
-```
-./checker1
-```
-After you run the program it will halt for an input string. Once the input
-string is entered, press enter, and the program will return the result.
+Just calls the functions by name in the interpreter.
 
 ## License Information
 This software is licensed under the GNU GPL V3.0. The actual license can be
