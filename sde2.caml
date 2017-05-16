@@ -1,0 +1,119 @@
+(* CPSC/ECE - 3520 Fuzzy Set Notation Set Manipulator.
+ * Copyright (C) 2017 Joshua Forbes
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *)
+
+(* HELPER FUNCTIONS BELOW *)
+
+let getFirstElementOfTuple = fun (a,b) -> a;;
+
+let getSecondElementOfTuple = fun (a,b) -> b;;
+
+let rec getFirstElementSum = fun someList ->
+	
+	if (( List.tl someList ) == [] ) 
+	
+		then getFirstElementOfTuple (List.hd(someList))
+		
+	else
+	
+		 (getFirstElementOfTuple (List.hd(someList))) + (getFirstElementSum (List.tl(someList)));;
+		 
+let rec getIntersectSlist = fun slist1 slist2 ->
+
+	if( List.tl(slist1) == [] && List.tl(slist2) == [])
+	
+		then if (getSecondElementOfTuple (List.hd(slist1)) < getSecondElementOfTuple (List.hd(slist2)))
+			
+				then [List.hd(slist1)]
+
+			else if (getSecondElementOfTuple (List.hd(slist1)) > getSecondElementOfTuple (List.hd(slist2)))
+			
+					then [List.hd(slist2)]
+
+			else [List.hd(slist1)]
+	
+	else if (getSecondElementOfTuple (List.hd(slist1)) < getSecondElementOfTuple (List.hd(slist2)))
+		
+		then [List.hd(slist1)] @ getIntersectSlist (List.tl(slist1)) (List.tl(slist2))
+		
+	else if (getSecondElementOfTuple (List.hd(slist1)) > getSecondElementOfTuple (List.hd(slist2)))
+		
+		then [List.hd(slist2)] @ getIntersectSlist (List.tl(slist1)) (List.tl(slist2))
+	
+	else [List.hd(slist1)] @  getIntersectSlist (List.tl(slist1)) (List.tl(slist2));;
+		 
+(* ACTUAL PROJECT FUNCTIONS BELOW *)		 
+
+let set_intersect = fun mu1 mu2 ->
+
+	(getFirstElementOfTuple mu1, (getIntersectSlist (getSecondElementOfTuple mu1) (getSecondElementOfTuple mu2)));;
+
+let rec listMaxTuples = fun slist ->
+	
+	if (List.tl(slist) == []) 
+	
+		then List.hd(slist)
+	
+	else if(getSecondElementOfTuple (List.hd(slist)) > getSecondElementOfTuple (listMaxTuples (List.tl(slist))))
+	
+			then List.hd(slist)
+			
+		else 
+		
+			listMaxTuples (List.tl(slist));;
+
+
+let listMaxTupleValue = fun slist -> (getSecondElementOfTuple(listMaxTuples slist));;
+
+let rec truncateConsequentMu = fun slist value ->
+
+	if (List.tl(slist) == [])
+	
+		then if (getSecondElementOfTuple (List.hd(slist)) > value)
+		
+			then [(getFirstElementOfTuple(List.hd(slist)), value)]
+			
+		else [List.hd(slist)]
+		
+	else if (getSecondElementOfTuple (List.hd(slist)) > value)
+
+		then [(getFirstElementOfTuple(List.hd(slist)), value)] @ (truncateConsequentMu (List.tl(slist)) value)
+
+	else [List.hd(slist)] @ (truncateConsequentMu (List.tl(slist)) value);;	
+
+
+let rec listMaxTuplesAll = fun slist -> 
+
+	if(List.tl(slist) == [])
+	
+		then [List.hd(slist)]
+	
+	else if (getSecondElementOfTuple(List.hd(slist)) = getSecondElementOfTuple(List.hd(listMaxTuplesAll(List.tl(slist)))))
+	
+		then [List.hd(slist)]@listMaxTuplesAll(List.tl(slist))
+	
+	else if (getSecondElementOfTuple(List.hd(slist)) > getSecondElementOfTuple(List.hd(listMaxTuplesAll(List.tl(slist)))))
+	
+		then [List.hd(slist)]
+	
+	else  listMaxTuplesAll(List.tl(slist));;
+
+
+let mom = fun maxlist ->
+	
+	( (float_of_int (getFirstElementSum maxlist)) /. ( float_of_int (List.length(maxlist))));;
+	
+
